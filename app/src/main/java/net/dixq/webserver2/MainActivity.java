@@ -16,11 +16,9 @@ public class MainActivity extends AppCompatActivity implements OnMessageListener
 
         WebServer.INSTANCE.start(this);
 
-        // 3秒後に自分に対してメッセージをpostする
-        new Thread(()->{
-            try { Thread.sleep(3000); } catch (InterruptedException ignored) {}
-            Poster.INSTANCE.postMessageWithOkHttp("http://192.168.0.43:8080/message", "Hello, Server!");
-        }).start();
+        new Handler().postDelayed(()->{ // 3秒後に自分に対してメッセージをpostする
+            Poster.INSTANCE.post("http://192.168.0.43:8080/message", "Hello, Server!");
+        }, 3000);
     }
 
     @Override
